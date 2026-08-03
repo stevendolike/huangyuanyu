@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>黄元御skill · 气机升降中医AI</title>
+<style>
+  :root {
+    --ink: #2b2b2b;
+    --paper: #f7f3ea;
+    --paper-dark: #efe8d8;
+    --cinnabar: #a03d2f;
+    --cinnabar-light: #c05a48;
+    --gold: #b8860b;
+    --jade: #4a7c6f;
+    --line: #d8cfbc;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.8;
+  }
+  /* ===== 顶部卷轴头 ===== */
+  .hero {
+    background: linear-gradient(160deg, #3a2d22 0%, #5c4632 55%, #7a5c40 100%);
+    color: #f5efe2;
+    text-align: center;
+    padding: 70px 20px 55px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 6px solid var(--cinnabar);
+  }
+  .hero::before {
+    content: "☯";
+    position: absolute;
+    right: -40px; top: -60px;
+    font-size: 300px; opacity: 0.07;
+  }
+  .hero h1 {
+    font-size: 52px;
+    letter-spacing: 14px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    margin-bottom: 10px;
+  }
+  .hero .subtitle {
+    font-size: 20px;
+    letter-spacing: 4px;
+    color: #e8dcc0;
+    margin-bottom: 22px;
+  }
+  .hero .seal {
+    display: inline-block;
+    background: var(--cinnabar);
+    color: #f8f0df;
+    padding: 6px 22px;
+    border-radius: 4px;
+    font-size: 15px;
+    letter-spacing: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    margin-bottom: 26px;
+  }
+  .hero .stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 14px;
+  }
+  .hero .stats span {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 6px 16px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+  /* ===== 主体容器 ===== */
+  .container { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+  section { padding: 48px 0; border-bottom: 1px dashed var(--line); }
+  .quote {
+    text-align: center;
+    font-size: 19px;
+    font-style: italic;
+    color: var(--cinnabar);
+    padding: 40px 10% 8px;
+    letter-spacing: 2px;
+  }
+  .quote cite { display: block; font-style: normal; font-size: 14px; color: #8a7d66; margin-top: 10px; }
+  /* ===== 标题 ===== */
+  h2 {
+    font-size: 28px;
+    letter-spacing: 6px;
+    color: var(--cinnabar);
+    margin-bottom: 24px;
+    padding-bottom: 10px;
+    border-bottom: 3px double var(--gold);
+    display: inline-block;
+  }
+  h3 { font-size: 18px; color: var(--jade); margin: 26px 0 12px; letter-spacing: 2px; }
+  p  { margin-bottom: 14px; font-size: 15.5px; }
+  /* ===== 激活词 ===== */
+  .keywords { text-align: center; margin: 18px 0; }
+  .keywords .kw {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid var(--cinnabar);
+    color: var(--cinnabar);
+    border-radius: 20px;
+    padding: 4px 16px;
+    margin: 4px;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+  /* ===== 一气周流图 ===== */
+  .circle-model {
+    background: var(--paper-dark);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    padding: 28px;
+    text-align: center;
+    margin: 20px 0;
+  }
+  .circle-model svg { max-width: 100%; height: auto; }
+  /* ===== 表格 ===== */
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14.5px; background: #fff; }
+  th {
+    background: var(--cinnabar);
+    color: #f8f0df;
+    padding: 10px 12px;
+    text-align: left;
+    letter-spacing: 2px;
+    font-weight: normal;
+  }
+  td { border: 1px solid var(--line); padding: 9px 12px; vertical-align: top; }
+  tr:nth-child(even) td { background: #faf7f0; }
+  /* ===== Q&A ===== */
+  .qa { margin: 14px 0; }
+  .qa .q {
+    background: #fff;
+    border-left: 4px solid var(--cinnabar);
+    padding: 12px 16px;
+    font-weight: bold;
+    border-radius: 0 8px 8px 0;
+  }
+  .qa .a {
+    background: var(--paper-dark);
+    border-left: 4px solid var(--jade);
+    padding: 12px 16px;
+    margin-top: 6px;
+    border-radius: 0 8px 8px 0;
+  }
+  .qa .a .plain { color: #6b6152; font-size: 13.5px; margin-top: 8px; }
+  /* ===== 版本时间线 ===== */
+  .timeline { position: relative; padding-left: 26px; }
+  .timeline::before {
+    content: "";
+    position: absolute; left: 8px; top: 0; bottom: 0;
+    width: 2px; background: var(--line);
+  }
+  .ver { position: relative; margin-bottom: 18px; }
+  .ver::before {
+    content: "";
+    position: absolute; left: -25px; top: 8px;
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    border: 2px solid #fff;
+  }
+  .ver .v { color: var(--cinnabar); font-weight: bold; font-size: 15px; }
+  .ver .d { font-size: 13.5px; color: #6b6152; }
+  /* ===== 安装 ===== */
+  .install-box {
+    background: #2b2b2b;
+    color: #e8e2d2;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-family: "SF Mono", Consolas, monospace;
+    font-size: 13.5px;
+    overflow-x: auto;
+    margin: 12px 0;
+  }
+  .install-box .cmd { color: #7fd0a8; }
+  /* ===== 注意事项 ===== */
+  .notice {
+    background: #fdf6ec;
+    border: 1px solid #e0c9a8;
+    border-radius: 10px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: #7a5c33;
+    margin: 18px 0;
+  }
+  .notice strong { color: var(--cinnabar); }
+  /* ===== 页脚 ===== */
+  footer {
+    background: #2b2b2b;
+    color: #b8ab92;
+    text-align: center;
+    padding: 34px 20px;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+  footer .links a { color: #d8c9a8; text-decoration: none; margin: 0 10px; }
+  footer .links a:hover { color: #fff; }
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 34px; letter-spacing: 8px; }
+    .hero .subtitle { font-size: 15px; letter-spacing: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ 顶部 ============ -->
+<div class="hero">
+  <h1>黄元御skill</h1>
+  <div class="subtitle">气机升降 · 中医AI</div>
+  <div class="seal">玉楸子 · 乾隆御医</div>
+  <div class="stats">
+    <span>15 诊断公式</span>
+    <span>8 决策树</span>
+    <span>10 问诊协议</span>
+    <span>273 关键词索引</span>
+    <span>10 则医案</span>
+    <span>11 部医书全文</span>
+    <span>三书同源</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ============ 引言 ============ -->
+  <section style="padding-bottom:10px;">
+    <div class="quote">
+      「中气者，和济水火之机，升降金木之轴，道家谓之黄婆。」
+      <cite>—— 黄元御《四圣心源 · 劳伤解 · 中气》</cite>
+    </div>
+    <div class="keywords">
+      <span class="kw">黄元御</span><span class="kw">一气周流</span><span class="kw">土枢四象</span>
+      <span class="kw">水寒土湿</span><span class="kw">中气为轴</span><span class="kw">崇阳抑阴</span><span class="kw">玉楸子</span>
+    </div>
+    <div class="notice">
+      ⚠️ <strong>学习研究声明：</strong>本技能仅用于学习研究目的，不构成医疗建议。出方前须确认学习研究目的，真实病症请及时就医。
+    </div>
+  </section>
+
+  <!-- ============ 一句话介绍 ============ -->
+  <section>
+    <h2>缘 起</h2>
+    <p>黄元御（1705—1758），名玉璐，号研农，别号玉楸子，山东昌邑人，清代乾隆御医，尊经派领袖，被推为清代学派之首。因庸医误治致目疾，愤而学医，自称传承黄帝、岐伯、越人（扁鹊）、仲景四圣。</p>
+    <p>本skill将黄元御的气机升降辨证体系、一基四方方剂、崇阳抑阴心法蒸馏为可激活的 Agent Skill，使 AI 能以黄元御的视角进行<b>中气辨证、升降定位、经方选药</b>，并以其文言口吻作答、附白话文翻译。</p>
+  </section>
+
+  <!-- ============ 核心模型 ============ -->
+  <section>
+    <h2>核心模型 · 一气周流</h2>
+    <div class="circle-model">
+      <svg viewBox="0 0 460 240" xmlns="http://www.w3.org/2000/svg">
+        <!-- 圆环 -->
+        <circle cx="230" cy="120" r="88" fill="none" stroke="#a03d2f" stroke-width="3" stroke-dasharray="10 6"/>
+        <circle cx="230" cy="120" r="34" fill="#efe8d8" stroke="#b8860b" stroke-width="3"/>
+        <text x="230" y="125" text-anchor="middle" font-size="17" fill="#a03d2f">中气</text>
+        <text x="230" y="143" text-anchor="middle" font-size="11" fill="#8a7d66">土 · 枢轴</text>
+        <!-- 左升 -->
+        <text x="118" y="118" text-anchor="middle" font-size="15" fill="#4a7c6f">左升 ↑</text>
+        <text x="118" y="140" text-anchor="middle" font-size="11" fill="#8a7d66">木火 · 肝脾</text>
+        <!-- 右降 -->
+        <text x="342" y="118" text-anchor="middle" font-size="15" fill="#4a7c6f">右降 ↓</text>
+        <text x="342" y="140" text-anchor="middle" font-size="11" fill="#8a7d66">金水 · 肺胃</text>
+        <!-- 底部 -->
+        <text x="230" y="228" text-anchor="middle" font-size="13" fill="#6b6152">清浊复位 · 阴阳调和</text>
+      </svg>
+    </div>
+    <p style="text-align:center;font-size:13.5px;color:#6b6152;">
+      辨证铁律：凡病先断水寒土湿 → 断中气败绝（预后） → 定升降（左升 / 右降 / 中运） → 选方基 → 脏腑加减 → 避禁忌
+    </p>
+  </section>
+
+  <!-- ============ 功能矩阵 ============ -->
+  <section>
+    <h2>功能矩阵</h2>
+    <table>
+      <tr><th>能力</th><th>说明</th></tr>
+      <tr><td><b>气机升降辨证</b></td><td>中气为轴、左升右降、土枢四象完整模型</td></tr>
+      <tr><td><b>诊断公式</b></td><td>15个：水寒土湿 / 中气败绝 / 升降四法 / 上热真伪 / 预后三窗口…</td></tr>
+      <tr><td><b>诊病十问</b></td><td>一问中气→二问升降→三问寒热→…→十问病史（断生死第一关）</td></tr>
+      <tr><td><b>IF-THEN决策树</b></td><td>8棵：首诊定性 / 升降定位 / 上热真伪 / 中气预后 / 不寐 / 二便 / 咳喘 / 妇人</td></tr>
+      <tr><td><b>一基四方</b></td><td>黄芽汤（参甘苓姜）+ 天魂 / 地魄 / 乌肝 / 兔髓</td></tr>
+      <tr><td><b>方证速查</b></td><td>专病专方 + 六气治法方 + 核心药对 + 方证鉴别表</td></tr>
+      <tr><td><b>六经速查</b></td><td>六经标本中气从化表 + 气化用药规律</td></tr>
+      <tr><td><b>误治禁区</b></td><td>禁滋阴 / 禁纯清 / 禁大下 15条 + 误治急救6条 + 传变预警6条</td></tr>
+      <tr><td><b>古今病名映射</b></td><td>150+条现代病→古代病名（糖尿病→消渴 / 痛风→历节…）</td></tr>
+      <tr><td><b>三书同源</b></td><td>《周易悬象》《道德悬解》《四圣心源》逐句互证（v2.1+）</td></tr>
+      <tr><td><b>医案参考</b></td><td>10则素灵微蕴完整医案（证-机-方-效四段链）</td></tr>
+      <tr><td><b>文言文回答</b></td><td>黄元御口吻文言作答 + 括号白话文版（v2.8新增）</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ 一基四方 ============ -->
+  <section>
+    <h2>一基四方 · 方剂体系</h2>
+    <table>
+      <tr><th>方</th><th>组成</th><th>主治</th></tr>
+      <tr><td><b>黄芽汤</b></td><td>人参三钱、甘草二钱、茯苓二钱、干姜二钱</td><td>中气虚寒（一切方之基）</td></tr>
+      <tr><td>天魂汤</td><td>甘草、桂枝、茯苓、干姜、人参、附子</td><td>阳虚（左路不升）</td></tr>
+      <tr><td>地魄汤</td><td>甘草、半夏、麦冬、芍药、五味子、牡蛎、玄参</td><td>阴虚（右路不降）</td></tr>
+      <tr><td>乌肝汤</td><td>甘草、人参、茯苓、干姜、附子、桂枝、首乌</td><td>阳脱（精遗）</td></tr>
+      <tr><td>兔髓汤</td><td>甘草、人参、茯苓、半夏、五味子、龙骨、牡蛎、麦冬、芍药</td><td>阴脱（神惊）</td></tr>
+    </table>
+  </section>
+
+  <!-- ============ 使用示例 ============ -->
+  <section>
+    <h2>使用示例</h2>
+
+    <div class="qa">
+      <div class="q">Q：我常年大便稀溏，吃凉的就拉肚子，手脚凉，怎么调理？</div>
+      <div class="a">
+        凡病先断水寒土湿。便溏者，脾阳下陷也；手足厥冷者，中阳不足也。法宜理中汤温运中土，使脾阳升达，清浊复位。
+        <div class="plain">（白话：先判断是不是水寒土湿。大便稀是脾阳下陷，手脚凉是中焦阳气不足。用理中汤温补中焦，让脾阳升起来，清浊之气各归其位。）</div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Q：总是口腔溃疡，是不是上火？喝凉茶有用吗？</div>
+      <div class="a">
+        上热之证，皆甲木之不降。究之火不胜水，则上热不敌下寒之剧。尔之溃疡，恐是相火浮越，非真火也。凉茶寒凉伐阳，愈饮愈浮。
+        <div class="plain">（白话：上火的病多是胆木之气不降。火压不住水，上热往往敌不过下寒。你的口腔溃疡恐怕是虚火浮越，不是真火。凉茶伤阳气，越喝火越浮。）</div>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Q：您的"一气周流"跟《周易》"太极生两仪"什么关系？</div>
+      <div class="a">
+        阴阳未判，是为太极。太极判剖，分而为二，是生两仪。两仪升降，是生四象。吾于《四圣心源》云"阴阳未判，一气混茫"——同一句宇宙论与人体论之两端，一理贯之。
+        <div class="plain">（白话：易经讲阴阳未分时是太极，太极分出阴阳两仪，两仪升降生出四象。我在《四圣心源》里说"阴阳未分，一气混茫"——这是同一句话用在宇宙和人体两个层面，道理是相通的。）</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 三书同源 ============ -->
+  <section>
+    <h2>跨经典 · 三书同源</h2>
+    <p>黄元御以"悬解"方法论贯通三大经典集群，本skill已将其内化为知识链路：</p>
+    <table>
+      <tr><th>经典</th><th>原文</th><th>医理映射</th></tr>
+      <tr><td><b>《道德悬解》</b> 章一注</td><td>无者，天地之太极。太极包含阴阳，阴阳之内有中气焉。</td><td>中气理论直接源头</td></tr>
+      <tr><td><b>《周易悬象》</b> 系辞注</td><td>阴阳未判，是为太极……两仪升降，是生四象。</td><td>一气周流宇宙论源头</td></tr>
+      <tr><td><b>《四圣心源》</b> 天人解</td><td>阴阳未判，一气混茫……清浊之间，是谓中气。</td><td>人体临床应用</td></tr>
+    </table>
+    <p style="font-size:13.5px;color:#6b6152;">结论：三书共享同一套"太极 → 中气 → 四象 → 脏腑"宇宙模型——易书止于八卦，道书止于虚无，医书收摄为四象+中气，完成从宇宙论到临床的降维映射。</p>
+  </section>
+
+  <!-- ============ 安装 ============ -->
+  <section>
+    <h2>安装方式</h2>
+    <h3>ClawHub / OpenClaw（推荐）</h3>
+    <div class="install-box"><span class="cmd">openclaw skills install @jangviktor-web/huangyuanyu</span></div>
+    <h3>手动安装</h3>
+    <div class="install-box"><span class="cmd">git clone https://github.com/jangviktor-web/huangyuanyu.git<br>cp -r huangyuanyu/ ~/.claude/skills/huangyuanyu/</span></div>
+    <h3>手机端（腾讯 IMA APP）</h3>
+    <p style="font-size:14px;">下载腾讯 IMA APP，技能市场搜索"黄元御"即可使用（IMA skill id：7487883782931678）。</p>
+  </section>
+
+  <!-- ============ 版本历史 ============ -->
+  <section>
+    <h2>更新日志</h2>
+    <div class="timeline">
+      <div class="ver"><span class="v">v2.8.0</span><div class="d">P0-P3增量训练：争议回应五步模板、穴位边界、19映射补4条、FAQ 18→21问；表达风格升级——文言文回答+括号白话文版</div></div>
+      <div class="ver"><span class="v">v2.7.0</span><div class="d">100题热度测试训练：2026互联网热度题库+全量实答（覆盖率98%→100%，评分9.4/10）</div></div>
+      <div class="ver"><span class="v">v2.6.0</span><div class="d">知识网络体检：死链修复+引用连通性验证</div></div>
+      <div class="ver"><span class="v">v2.5.0</span><div class="d">覆盖度补遗：周易悬象5处遗漏（大衍之数/剥卦/坤用六/同人/鼎）</div></div>
+      <div class="ver"><span class="v">v2.4.0</span><div class="d">06格式优化：48,102→38,738行（清页码3564/书眉947/LaTeX 1248/页脚773）</div></div>
+      <div class="ver"><span class="v">v2.3.0</span><div class="d">原文全文收录：道德悬解（modules/09）+ 周易悬象格式优化版（modules/10）</div></div>
+      <div class="ver"><span class="v">v2.2.0</span><div class="d">道德悬解内化：modules/08蒸馏本+38增强+三角对照+道德经关键词15条+三书闭环</div></div>
+      <div class="ver"><span class="v">v2.1.0</span><div class="d">周易悬象内化：modules/07蒸馏本+36/37链路+张力七+易学关键词25条+工作流易学溯源</div></div>
+      <div class="ver"><span class="v">v2.0.0</span><div class="d">V2.2四维补齐：内在张力6组/智识谱系/FAQ 18问/临床安全层/关键词200+/决策树8棵/学习研究确认协议</div></div>
+      <div class="ver"><span class="v">v1.0.0</span><div class="d">初始版：黄元御医书十一种基础技能</div></div>
+    </div>
+  </section>
+
+  <!-- ============ 数据来源 ============ -->
+  <section>
+    <h2>数据来源</h2>
+    <table>
+      <tr><th>素材</th><th>形态</th></tr>
+      <tr><td>《黄元御医书十一种》</td><td>modules/06 全文（3.37MB，格式优化版）</td></tr>
+      <tr><td>《四圣心源》</td><td>modules/04 全文（独立单行本）</td></tr>
+      <tr><td>《长沙药解》</td><td>modules/05 全文（独立单行本）</td></tr>
+      <tr><td>《周易悬象》</td><td>modules/10 原文 + modules/07 蒸馏本（40处医理关联）</td></tr>
+      <tr><td>《道德悬解》</td><td>modules/09 原文 + modules/08 蒸馏本（81章）</td></tr>
+      <tr><td>《素灵微蕴》医案</td><td>cases/01（10则完整医案）</td></tr>
+    </table>
+  </section>
+
+</div>
+
+<!-- ============ 页脚 ============ -->
+<footer>
+  <div class="links">
+    <a href="https://github.com/jangviktor-web/huangyuanyu">GitHub</a> ·
+    <a href="https://clawhub.ai">ClawHub</a> ·
+    <a href="https://github.com/jangviktor-web/nihaixia">倪海厦skill</a> ·
+    <a href="https://github.com/jangviktor-web/huxishu">胡希恕skill</a>
+  </div>
+  <div style="margin-top:14px;">
+    黄元御skill · v2.8.0 · 木兰宽松许可证（MulanPSL-2.0）
+  </div>
+  <div style="margin-top:6px;font-size:12px;">
+    内容源自清代古籍（作者已过世数百年）之整理与蒸馏 · 仅供学习研究 · 不构成医疗建议
+  </div>
+</footer>
+
+</body>
+</html>
