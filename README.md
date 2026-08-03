@@ -35,6 +35,8 @@
 
 ```bash
 openclaw skills install @jangviktor-web/huangyuanyu
+或者
+npx skills add https://clawhub.ai/jangviktor-web/skills/huangyuanyu
 ```
 </details>
 
