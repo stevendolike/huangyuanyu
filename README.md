@@ -1,4 +1,5 @@
 <div align="center">
+<img width="1280" height="1280" alt="logo (1)" src="https://github.com/user-attachments/assets/54d4c77f-2567-4191-90a2-3ef72aa7ac7b" />
 
 # 黄元御skill · 气机升降中医AI
 
