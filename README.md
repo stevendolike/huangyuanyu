@@ -1,5 +1,4 @@
 <div align="center">
-<img width="120" alt="logo (1)" src="https://github.com/user-attachments/assets/54d4c77f-2567-4191-90a2-3ef72aa7ac7b" />
 
 # 黄元御skill · 气机升降中医AI
 
@@ -36,8 +35,6 @@
 
 ```bash
 openclaw skills install @jangviktor-web/huangyuanyu
-或者
-npx skills add https://clawhub.ai/jangviktor-web/skills/huangyuanyu
 ```
 </details>
 
