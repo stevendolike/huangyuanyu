@@ -49,8 +49,8 @@ npx skills add https://clawhub.ai/jangviktor-web/skills/huangyuanyu
 请根据 https://skillhub.cn/install/skillhub.md，安装 @user_ff4d9420/huangyuanyu。
 
 #或者复制下面文字发送到agent，让agent自动克隆仓库安装。
-git clone https://github.com/jangviktor-web/huangyuanyu.git
-cp -r huangyuanyu/ ~/.claude/skills/huangyuanyu/
+使用 git clone https://github.com/jangviktor-web/huangyuanyu.git，安装skill。
+
 ```
 </details>
 
