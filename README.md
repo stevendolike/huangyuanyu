@@ -42,7 +42,7 @@ npx skills add https://clawhub.ai/jangviktor-web/skills/huangyuanyu
 </details>
 
 <details>
-<summary><b>手动安装</b></summary>
+<summary><b>腾讯Skillhub/ 克隆Github仓库安装</b></summary>
 
 ```bash
 # 腾讯Skillhub 把下面这句话复制到wordbuddy、Qclaw 、openclaw即可安装 
