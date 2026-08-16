@@ -1,0 +1,34 @@
+name: Sync Upstream
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # 每日 UTC 03:00 (香港 11:00)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch upstream (jangviktor-web/huangyuanyu)
+        run: |
+          git remote add upstream https://github.com/jangviktor-web/huangyuanyu.git
+          git fetch upstream
+
+      - name: Fast-forward sync (main)
+        run: |
+          git checkout main
+          if git merge --ff-only upstream/main; then
+            git push origin main
+            echo "Synced main to upstream/main"
+          else
+            echo "::warning::Not fast-forwardable (local commits?) - manual sync needed"
+            exit 1
+          fi
